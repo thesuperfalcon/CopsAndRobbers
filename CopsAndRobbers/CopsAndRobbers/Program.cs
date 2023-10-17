@@ -21,12 +21,19 @@ namespace CopsAndRobbers
 
             while (true)
             {
+                
+                Console.SetCursorPosition(110, 10);
+                Console.WriteLine($"{placement[0]} {placement[1]}");
                 map.DrawMap(mapSize, placement);
-                //int[]newPlacement = movement.Move(placement);
-                //newPlacement = placement;
-                Console.Read();
+                
+                int[] newPlacement = Movement.Move(placement, mapSize);
+                newPlacement = placement;
+                
+                
+                Console.ReadKey();
                 Console.Clear();
             }
+            
         }
     }
 }

@@ -19,7 +19,7 @@ namespace CopsAndRobbers
             int height = MapSize.GetLength(0);
             int width = MapSize.GetLength(1);
 
-            for (int i = 0; i < height + 1; i++)
+            for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(i, 0);
                 Console.Write("#");
@@ -27,7 +27,7 @@ namespace CopsAndRobbers
                 Console.Write("#");
             }
 
-            for(int i = 0; i < width + 1; i++)
+            for(int i = 0; i < width; i++)
             {
                 Console.SetCursorPosition(0, i);
                 Console.Write("#");

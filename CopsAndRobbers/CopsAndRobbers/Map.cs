@@ -22,17 +22,17 @@ namespace CopsAndRobbers
             for (int i = 0; i < height; i++)
             {
                 Console.SetCursorPosition(i, 0);
-                Console.Write("#");
+                Border();
                 Console.SetCursorPosition(i, width);
-                Console.Write("#");
+                Border();
             }
 
             for(int i = 0; i < width; i++)
             {
                 Console.SetCursorPosition(0, i);
-                Console.Write("#");
+                Border();
                 Console.SetCursorPosition(height, i);
-                Console.Write("#");
+                Border();
             }
 
             for(int row = 0; row < height; row++)
@@ -46,6 +46,10 @@ namespace CopsAndRobbers
                     }
                 }
             }
+        }
+        public void Border()
+        {
+            Console.Write("X");
         }
     }
 }

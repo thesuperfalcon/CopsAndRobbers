@@ -8,29 +8,53 @@ namespace CopsAndRobbers
         {
             Movement movement = new Movement();
 
+            Report report = new Report();
+
+
             int[,] mapSize = new int[100, 25];
             int[] placement = new int[2];
 
-            List<Person> person = new List<Person>();
-
-            List<string> inventory = new List<string>();
-
-            Citizen citizen1 = new Citizen(new int[2] {50, 15} , new int[2] { 1, 1 }, inventory);
-
             Map map = new Map(mapSize);
+
+            List<Person> persons = new List<Person>();
+
+            List<Item> belongings = new List<Item>();
+
+
+            List<Item> loot = new List<Item>();
+
+            List<Item> confiscated = new List<Item>();
+
+            for(int i = 0; i <= 10; i++)
+            {
+                persons.Add(new Citizen(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, belongings));
+            }
+
+            for(int i = 0; i <= 5; i++)
+            {
+                persons.Add(new Thief(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, loot, true));
+            }
+
+            for (int i = 0; i <= 5; i++)
+            {
+                persons.Add(new Police(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, confiscated, true));
+            }
 
             while (true)
             {
-                
-                Console.SetCursorPosition(110, 10);
-                Console.WriteLine($"{citizen1.Placement[0]} {citizen1.Placement[1]}");
-                map.DrawMap(mapSize, citizen1.Placement);
+                Console.CursorVisible = false;
+
+                foreach (Person person in persons)
+                {
+                    map.DrawMap(mapSize, person.Placement, person);
+                    //report.ReportAndUpdates(person);
+                    int[] newPlacement = Movement.Move(person.Placement, mapSize);
+                    newPlacement = placement;
+                    int x = 0;
+                }
                 Thread.Sleep(100);
-                int[] newPlacement = Movement.Move(citizen1.Placement, mapSize);
-                newPlacement = placement;
                 Console.Clear();
             }
-            
         }
     }
 }

@@ -14,7 +14,7 @@ namespace CopsAndRobbers
         {
             MapSize = mapSize;
         }
-        public void DrawMap(int[,]mapSize, int[]placement)
+        public void DrawMap(int[,]mapSize, int[]placement,Person person)
         {
             int height = MapSize.GetLength(0);
             int width = MapSize.GetLength(1);
@@ -42,7 +42,7 @@ namespace CopsAndRobbers
                     if(row == placement[0] && col == placement[1])
                     {
                         Console.SetCursorPosition(placement[0], placement[1]);
-                        Console.Write("C");
+                        Console.Write((person is Citizen) ? "C" : (person is Thief) ? "T" : (person is Police) ? "P" : "");
                     }
                 }
             }

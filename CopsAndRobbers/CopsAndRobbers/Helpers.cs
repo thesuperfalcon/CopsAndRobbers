@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CopsAndRobbers
 {
-    internal class Helpers
+    public class Helpers
     {
         public static int Random(int i, int j)
         {
@@ -14,28 +14,34 @@ namespace CopsAndRobbers
             int x = rnd.Next(i, j);
             return x;
         }
-        public List<string> Inventory(List<string>inventory)
-        {
-            List<string> item = new List<string>();
+        //public static List<Item> Inventory(List<Item>inventory, Person person)
+        //{
+        //    Item item1 = new Item("Apple-Watch", 1);
+        //    Item item2 = new Item("Keys", 1);
+        //    Item item3 = new Item("Iphone 15", 1);
+        //    Item item4 = new Item("Cash", 1);
+        //    Item item5 = new Item("Pass", 1);
 
-            item.Add("Klocka");
-            item.Add("Nycklar");
-            item.Add("Telefon");
-            item.Add("Pengar");
-            item.Add("Pass");
-
-            if(inventory == null)
-            {
-                switch(Random(1,5))
-                {
-                    case 1: inventory.Add("Klocka"); break;
-                    case 2: inventory.Add("Nycklar"); break;
-                    case 3: inventory.Add("Telefon"); break;
-                    case 4: inventory.Add("Pengar"); break;
-                    case 5: inventory.Add("Pass"); break;
-                }
-            }
-            return inventory;
-        }
+        //    if(person is Citizen)
+        //    {
+        //        inventory.Add(item1);
+        //        inventory.Add(item2);
+        //        inventory.Add(item3);
+        //        inventory.Add(item4);
+        //        inventory.Add(item5);
+        //    }
+            //if (inventory == null)
+            //{
+            //    switch(Random(1,5))
+            //    {
+        //    //        case 1: inventory.Add(item1); break;
+        //    //        case 2: inventory.Add(item2); break;
+        //    //        case 3: inventory.Add(item3); break;
+        //    //        case 4: inventory.Add(item4); break;
+        //    //        case 5: inventory.Add(item5); break;
+        //    //    }
+        //    //}
+        //    return inventory;
+        //}
     }
 }

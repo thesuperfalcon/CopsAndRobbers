@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading;
 
 namespace CopsAndRobbers
 {
@@ -20,59 +22,98 @@ namespace CopsAndRobbers
 
             List<Item> belongings = new List<Item>();
 
-            belongings = Item.AllTypesOfObjects();
-
             List<Item> loot = new List<Item>();
 
             List<Item> confiscated = new List<Item>();
 
-            for(int i = 0; i <= 0; i++)
+            belongings.AddRange(Item.AllTypesOfObjects());
+
+            for (int i = 1; i <= 10; i++)
             {
-                persons.Add(new Citizen(new int[2] { 1, 1 }, new int[2] { 1, 1 }, belongings));
-                persons.Add(new Citizen(new int[2] { 6, 3 }, new int[2] { 1, 1 }, belongings));
+                persons.Add(new Citizen(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, belongings = Item.AllTypesOfObjects()));
             }
 
-            for (int i = 0; i <= 0; i++)
+            for (int i = 1; i <= 5; i++)
             {
-                persons.Add(new Thief(new int[2] { 1, 1 }, new int[2] { 1, 1 }, loot, true));
-                persons.Add(new Thief(new int[2] { 5, 3 }, new int[2] { 1, 1 }, loot, true));
-               
+                persons.Add(new Thief(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, loot = Item.EmptyList(), true));
             }
 
-            //for(int i = 0; i <= 10; i++)
-            //{
-            //    persons.Add(new Citizen(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, belongings));
-            //}
+            for (int i = 1; i <= 5; i++)
+            {
+                persons.Add(new Police(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, confiscated = Item.EmptyList(), true));
+            }
 
-            //for(int i = 0; i <= 5; i++)
-            //{
-            //    persons.Add(new Thief(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, loot, true));
-            //}
+            int citizenCount = 0;
+            int thiefCount = 0;
+            int policeCount = 0;
 
-            //for (int i = 0; i <= 5; i++)
-            //{
-            //    persons.Add(new Police(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, confiscated, true));
-            //}
+
+            foreach(Person person in persons)
+            {
+                if (person is Citizen)
+                {
+                    citizenCount++;
+                }
+                else if(person is Thief)
+                {
+                    thiefCount++;
+                }
+                else if(person is Police)
+                {
+                    policeCount++;
+                }
+            }
 
             while (true)
             {
                 Console.CursorVisible = false;
 
-                Meeting.HandleMeeting(persons, mapSize);
+                int x = 0;
 
                 foreach (Person person in persons)
                 {
                     //map.DrawMap(mapSize, person.Placement, person);
                     report.ReportAndUpdates(person);
-                    //Meeting.HandleMeeting(persons, mapSize);
-                    //int[] newPlacement = Movement.Move(person.Placement, mapSize);
-                    //newPlacement = placement;
+                    int[] newPlacement = Movement.Move(person.Placement, mapSize);
+                    newPlacement = placement;
                 }
-                int x = 0;
-                Console.ReadLine();
+
+                Console.WriteLine();
+                CountAllPersons(persons);
+                Console.WriteLine();
+                Meeting.HandleMeeting(persons, mapSize);
+
                 Thread.Sleep(100);
                 Console.Clear();
             }
+        }
+        public static void CountAllPersons(List<Person> persons)
+        {
+
+            int citizenCount = 0;
+            int thiefCount = 0;
+            int policeCount = 0;
+
+            foreach (Person person in persons)
+            {
+              
+
+                if (person is Citizen)
+                {
+                    citizenCount++;
+                }
+                else if (person is Thief)
+                {
+                    thiefCount++;
+                }
+                else if (person is Police)
+                {
+                    policeCount++;
+                }
+            }
+            Console.WriteLine($"Citizens: {citizenCount}");
+            Console.WriteLine($"Thieves: {thiefCount}");
+            Console.WriteLine($"Polices: {policeCount}");
         }
     }
 }

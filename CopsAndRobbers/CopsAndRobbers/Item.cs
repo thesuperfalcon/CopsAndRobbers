@@ -32,5 +32,11 @@ namespace CopsAndRobbers
 
             return items;
         }
+        public static List<Item> EmptyList()
+        {
+            List<Item> items = new List<Item> ();
+
+            return items;
+        }
     }
 }

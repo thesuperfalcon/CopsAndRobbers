@@ -40,6 +40,10 @@ namespace CopsAndRobbers
 
                 result += " Seized Goods: ";
 
+                foreach(Item item in police.Confiscated)
+                {
+                    result += item.Objects + ", ";
+                }
             }
             Console.WriteLine(result);
         }

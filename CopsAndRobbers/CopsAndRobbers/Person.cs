@@ -20,7 +20,7 @@ namespace CopsAndRobbers
     public class Citizen : Person 
     {
         public List<Item> Belongings { get; set; }
-        public Citizen(int[]placement, int[]direction, List<Item>belongings) : base(placement, direction)
+        public Citizen(int[]placement, int[] direction, List<Item> belongings) : base(placement, direction)
         {
             Belongings = belongings;
         }

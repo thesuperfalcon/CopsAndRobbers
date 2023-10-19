@@ -29,15 +29,14 @@ namespace CopsAndRobbers
             for(int i = 0; i <= 0; i++)
             {
                 persons.Add(new Citizen(new int[2] { 1, 1 }, new int[2] { 1, 1 }, belongings));
-                persons.Add(new Thief(new int[2] { 1, 1 }, new int[2] { 1, 1 }, loot, true));
+                persons.Add(new Citizen(new int[2] { 6, 3 }, new int[2] { 1, 1 }, belongings));
             }
 
             for (int i = 0; i <= 0; i++)
             {
-                persons.Add(new Citizen(new int[2] { 6, 3 }, new int[2] { 1, 1 }, belongings));
+                persons.Add(new Thief(new int[2] { 1, 1 }, new int[2] { 1, 1 }, loot, true));
                 persons.Add(new Thief(new int[2] { 5, 3 }, new int[2] { 1, 1 }, loot, true));
-                persons.Add(new Thief(new int[2] { 5, 3 }, new int[2] { 1, 1 }, loot, true));
-                persons.Add(new Thief(new int[2] { 5, 3 }, new int[2] { 1, 1 }, loot, true));
+               
             }
 
             //for(int i = 0; i <= 10; i++)

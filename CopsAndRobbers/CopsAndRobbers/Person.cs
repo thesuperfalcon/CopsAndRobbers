@@ -9,7 +9,6 @@ namespace CopsAndRobbers
 {
     public class Person
     {
-
         public int[] Placement { get; set; }
         public int[] Direction { get; set; }
         public Person(int[] placement, int[] direction)
@@ -20,27 +19,11 @@ namespace CopsAndRobbers
     }
     public class Citizen : Person 
     {
-        List<Item> Belongings { get; set; }
+        public List<Item> Belongings { get; set; }
         public Citizen(int[]placement, int[]direction, List<Item>belongings) : base(placement, direction)
         {
             Belongings = belongings;
         }
-        //public static List<Item> Inventory(List<Item>belongings)
-        //{
-        //    Item item1 = new Item("Apple-Watch", 1);
-        //    Item item2 = new Item("Keys", 1);
-        //    Item item3 = new Item("Iphone 15", 1);
-        //    Item item4 = new Item("Cash", 1);
-        //    Item item5 = new Item("Nicotine-Product", 1);
-
-        //    belongings.Add(item1);
-        //    belongings.Add(item2);
-        //    belongings.Add(item3);
-        //    belongings.Add(item4);
-        //    belongings.Add(item5);
-
-        //    return belongings;
-        //}
     }
     public class Thief : Person
     {

@@ -14,23 +14,32 @@ namespace CopsAndRobbers
             result += $" {person.Placement[0]} {person.Placement[1]} ";
             if(person is Citizen)
             {
-                List<Item> belongings = new List<Item>();
-                Item item1 = new Item("Apple-Watch");
-                Item item2 = new Item("Keys");
-                Item item3 = new Item("Iphone 15");
-                Item item4 = new Item("Cash");
-                Item item5 = new Item("Nicotine-Product");
+                Citizen citizen = (Citizen)person;
 
-                belongings.Add(item1);
-                belongings.Add(item2);
-                belongings.Add(item3);
-                belongings.Add(item4);
-                belongings.Add(item5);
-                foreach(Item belonging in belongings)
+                result += " Belongings: ";
+
+                foreach(Item item in citizen.Belongings)
                 {
-                    result += belonging.Objects + ", ";
+                    result += item.Objects + ", ";
                 }
-                result += belongings.Count;
+            }
+            if(person is Thief)
+            {
+                Thief thief = (Thief)person;
+
+                result += " Stealed Goods: ";
+
+                foreach(Item item in thief.Loot)
+                {
+                    result += item.Objects + ", ";
+                }
+            }
+            if(person is Police)
+            {
+                Police police = (Police)person;
+
+                result += " Seized Goods: ";
+
             }
             Console.WriteLine(result);
         }

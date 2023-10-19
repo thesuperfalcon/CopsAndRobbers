@@ -35,18 +35,6 @@ namespace CopsAndRobbers
                     }
                 }
             }
-            //ConsoleKeyInfo key = Console.ReadKey();
-            //switch (key.KeyChar)
-            //{
-            //    case 'w':
-            //        placement[1]--; break;
-            //    case 's':
-            //        placement[1]++; break;
-            //    case 'a':
-            //        placement[0]--; break;
-            //    case 'd':
-            //        placement[0]++; break;
-            //}
             int num = Helpers.Random(0, 160);
             if (num <= 20)
             {

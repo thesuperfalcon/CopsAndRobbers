@@ -94,8 +94,8 @@
         {
             int number1, number2;
 
-            number1 = Random(0, mapSize.GetLength(0));
-            number2 = Random(0, mapSize.GetLength(1));
+            number1 = Random(1, mapSize.GetLength(0));
+            number2 = Random(1, mapSize.GetLength(1));
 
             return new int[] { number1, number2 };
         }

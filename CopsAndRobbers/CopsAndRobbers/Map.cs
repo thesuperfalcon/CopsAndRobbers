@@ -10,9 +10,9 @@
             int height = map.GetLength(0);
             int width = map.GetLength(1);
 
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row <= height; row++)
             {
-                for (int col = 0; col < width; col++)
+                for (int col = 0; col <= width; col++)
                 {
                     bool isPersonHere = false;
                     foreach (Person person in persons)
@@ -27,7 +27,7 @@
 
                     if (!isPersonHere)
                     {
-                        if (row == 0 || col == 0 || row == height - 1 || col == width - 1)
+                        if (row == 0 || col == 0 || row == height || col == width)
                         {
                             Console.Write("X");
                         }

@@ -15,15 +15,15 @@
             {
                 person.Placement[0] = height - 1;
             }
-            if (person.Placement[0] >= height - 1)
+            else if (person.Placement[0] >= height - 1)
             {
                 person.Placement[0] = 1;
             }
-            if (person.Placement[1] <= 0)
+            else if (person.Placement[1] <= 0)
             {
                 person.Placement[1] = width - 1;
             }
-            if (person.Placement[1] >= width - 1)
+            else if (person.Placement[1] >= width - 1)
             {
                 person.Placement[1] = 1;
             }

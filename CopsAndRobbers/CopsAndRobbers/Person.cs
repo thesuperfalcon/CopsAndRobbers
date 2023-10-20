@@ -9,40 +9,44 @@ namespace CopsAndRobbers
 {
     public class Person
     {
+        public string Name { get; set; }
         public int[] Placement { get; set; }
         public int[] Direction { get; set; }
-        public Person(int[] placement, int[] direction)
+        public Person(string name, int[] placement, int[] direction)
         {
+            Name = name;
             Placement = placement;
             Direction = direction;
         }
     }
     public class Citizen : Person 
     {
+        public bool HasBeenRobbed { get; set; }
         public List<Item> Belongings { get; set; }
-        public Citizen(int[]placement, int[] direction, List<Item> belongings) : base(placement, direction)
+        public Citizen(string name, int[]placement, int[] direction, List<Item> belongings, bool hasBeenRobbed) : base(name, placement, direction)
         {
             Belongings = belongings;
+            HasBeenRobbed = hasBeenRobbed;
         }
     }
     public class Thief : Person
     {
+        public bool Arrested { get; set; }
         public List<Item> Loot { get; set; }
-        public bool Steal { get; set; }
-        public Thief(int[] placement, int[] direction, List<Item>loot, bool steal) : base(placement, direction)
+        public Thief(string name, int[] placement, int[] direction, List<Item>loot, bool arrested) : base(name, placement, direction)
         {
-            Steal = steal;
             Loot = loot;
+            Arrested = arrested;
         }
     }
     public class Police : Person
     {
-        public List<Item> Confiscated { get; set; }
         public bool Arrest { get; set; }
-        public Police(int[] placement, int[] direction, List<Item> confiscated, bool arrest) : base(placement, direction)
+        public List<Item> Confiscated { get; set; }
+        public Police(string name, int[] placement, int[] direction, List<Item> confiscated, bool arrest) : base(name, placement, direction)
         {
-            Arrest = arrest;
             Confiscated = confiscated;
+            Arrest = arrest;
         }
     }
 }

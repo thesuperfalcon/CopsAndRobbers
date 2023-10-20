@@ -33,6 +33,7 @@ namespace CopsAndRobbers
                 {
                     result += item.Objects + ", ";
                 }
+                result += thief.Arrested ? "Arrested" : " ";
             }
             if(person is Police)
             {

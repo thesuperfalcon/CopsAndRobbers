@@ -10,26 +10,26 @@ namespace CopsAndRobbers
     {
         public static int[] Move(int[]placement, int [,]mapSize)
         {
-            int speed = 2;
+            int speed = 1;
             int height = mapSize.GetLength(0);
             int width = mapSize.GetLength(1);
-            for (int row = 0; row < height; row++)
+            for (int row = 0; row < width; row++)
             {
-                for(int col = 0; col < width; col++)
+                for(int col = 0; col < height; col++)
                 {
-                    if (placement[0] <= 0)
+                    if (placement[0] <= 0) //if direction[0] == -1 && direction[1] == 0
                     {
-                        placement[0] = height - 1;
+                        placement[0] = width - 1;
                     }
-                    if (placement[0] >= height)
+                    if (placement[0] >= width)
                     {
                         placement[0] = 1;
                     }
                     if (placement[1] <= 0)
                     {
-                        placement[1] = width - 1;
+                        placement[1] = height - 1;
                     }
-                    if (placement[1] >= width)
+                    if (placement[1] >= height)
                     {
                         placement[1] = 1;
                     }

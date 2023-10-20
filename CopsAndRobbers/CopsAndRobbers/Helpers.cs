@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CopsAndRobbers
+﻿namespace CopsAndRobbers
 {
     public class Helpers
     {
@@ -14,34 +8,75 @@ namespace CopsAndRobbers
             int x = rnd.Next(i, j);
             return x;
         }
-        //public static List<Item> Inventory(List<Item>inventory, Person person)
-        //{
-        //    Item item1 = new Item("Apple-Watch", 1);
-        //    Item item2 = new Item("Keys", 1);
-        //    Item item3 = new Item("Iphone 15", 1);
-        //    Item item4 = new Item("Cash", 1);
-        //    Item item5 = new Item("Pass", 1);
+        public static void CountAllPersons(List<Person> persons, int citizenAmount, int thiefAmount, int policeAmount)
+        {
 
-        //    if(person is Citizen)
-        //    {
-        //        inventory.Add(item1);
-        //        inventory.Add(item2);
-        //        inventory.Add(item3);
-        //        inventory.Add(item4);
-        //        inventory.Add(item5);
-        //    }
-            //if (inventory == null)
-            //{
-            //    switch(Random(1,5))
-            //    {
-        //    //        case 1: inventory.Add(item1); break;
-        //    //        case 2: inventory.Add(item2); break;
-        //    //        case 3: inventory.Add(item3); break;
-        //    //        case 4: inventory.Add(item4); break;
-        //    //        case 5: inventory.Add(item5); break;
-        //    //    }
-        //    //}
-        //    return inventory;
-        //}
+            int hasBeenRobbed = 0;
+
+            int thiefOutSize = thiefAmount;
+            int thiefInJail = 0;
+
+            int policeCount = 0;
+            int hasArrested = 0;
+
+            foreach (Person person in persons)
+            {
+                if (person is Citizen)
+                {
+                    Citizen citizen = (Citizen)person;
+                    if (citizen.HasBeenRobbed)
+                    {
+                        hasBeenRobbed++;
+                    }
+                }
+                else if (person is Thief)
+                {
+                    Thief thief = (Thief)person;
+                    if(thief.Arrested)
+                    {
+                        thiefOutSize--;
+                        thiefInJail++;
+                    }
+                }
+                else if (person is Police)
+                {
+                    policeCount++;
+                    Police police = (Police)person;
+                    if(police.Arrest)
+                    {
+                        hasArrested++;
+                        police.Arrest = false;
+                    }
+                }
+            }
+            Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
+            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter i finkan.");
+            Console.WriteLine($"Polices: {policeAmount}");
+        }
+        public static string[] NameGenerator()
+        {
+            string[] allNames =
+            {
+                "Karin",
+                "Anders",
+                "Johan",
+                "Eva",
+                "Maria",
+                "Mikael",
+                "Anna",
+                "Sara",
+                "Erik",
+                "Per",
+                "Christina",
+                "Lena",
+                "Lars",
+                "Emma",
+                "Kerstin",
+                "Karl",
+                "Marie",
+                "Peter"
+            };
+            return allNames;
+        }
     }
 }

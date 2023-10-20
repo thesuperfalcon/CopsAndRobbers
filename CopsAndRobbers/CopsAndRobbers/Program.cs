@@ -8,11 +8,24 @@ namespace CopsAndRobbers
     {
         static void Main(string[] args)
         {
+            int citizenAmount = 10;
+            int thiefAmount = 5;
+            int policeAmount = 5;
+
+            List<string> updates = new List<string>();
+
+            string[] names = Helpers.NameGenerator();
+
             Movement movement = new Movement();
 
             Report report = new Report();
 
-            int[,] mapSize = new int[100, 25];
+            int[,] mapSize = new int[25, 100];
+
+            int height = mapSize.GetLength(0);
+            int width = mapSize.GetLength(1);
+
+            int[,] newsFeedSize = new int[10, 10];
 
             int[] placement = new int[2];
 
@@ -28,20 +41,21 @@ namespace CopsAndRobbers
 
             belongings.AddRange(Item.AllTypesOfObjects());
 
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= citizenAmount; i++)
             {
-                persons.Add(new Citizen(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, belongings = Item.AllTypesOfObjects()));
+                persons.Add(new Citizen(names[Helpers.Random(0, names.Length)], new int[2] { Helpers.Random(1, height - 1), Helpers.Random(1, width - 1) }, new int[2] { 1, 1 }, belongings = Item.AllTypesOfObjects(), false));
             }
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= thiefAmount; i++)
             {
-                persons.Add(new Thief(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, loot = Item.EmptyList(), true));
+                persons.Add(new Thief(names[Helpers.Random(0, names.Length)], new int[2] { Helpers.Random(1, height - 1), Helpers.Random(1, width - 1) }, new int[2] { 1, 1 }, loot = Item.EmptyList(), false));
             }
 
-            for (int i = 1; i <= 5; i++)
+            for (int i = 1; i <= policeAmount; i++)
             {
-                persons.Add(new Police(new int[2] { Helpers.Random(1, 99), Helpers.Random(1, 24) }, new int[2] { 1, 1 }, confiscated = Item.EmptyList(), true));
+                persons.Add(new Police(names[Helpers.Random(0, names.Length)], new int[2] { Helpers.Random(1, height - 1), Helpers.Random(1, width - 1) }, new int[2] { 1, 1 }, confiscated = Item.EmptyList(), false));
             }
+
 
             int citizenCount = 0;
             int thiefCount = 0;
@@ -68,7 +82,7 @@ namespace CopsAndRobbers
             {
                 Console.CursorVisible = false;
 
-                int x = 0;
+                
 
                 foreach (Person person in persons)
                 {
@@ -79,41 +93,15 @@ namespace CopsAndRobbers
                 }
 
                 Console.WriteLine();
-                CountAllPersons(persons);
+                Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
+                NewsFeed.WriteNewsFeed(updates);
                 Console.WriteLine();
-                Meeting.HandleMeeting(persons, mapSize);
+                Meeting.HandleMeeting(persons, mapSize, updates);
+                //Console.ReadKey();
 
-                Thread.Sleep(100);
+                Thread.Sleep(200);
                 Console.Clear();
             }
-        }
-        public static void CountAllPersons(List<Person> persons)
-        {
-
-            int citizenCount = 0;
-            int thiefCount = 0;
-            int policeCount = 0;
-
-            foreach (Person person in persons)
-            {
-              
-
-                if (person is Citizen)
-                {
-                    citizenCount++;
-                }
-                else if (person is Thief)
-                {
-                    thiefCount++;
-                }
-                else if (person is Police)
-                {
-                    policeCount++;
-                }
-            }
-            Console.WriteLine($"Citizens: {citizenCount}");
-            Console.WriteLine($"Thieves: {thiefCount}");
-            Console.WriteLine($"Polices: {policeCount}");
         }
     }
 }

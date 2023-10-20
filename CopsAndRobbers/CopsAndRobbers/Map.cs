@@ -21,17 +21,17 @@ namespace CopsAndRobbers
 
             for (int i = 0; i < height; i++)
             {
-                Console.SetCursorPosition(i, 0);
+                Console.SetCursorPosition(0, i);
                 Border();
-                Console.SetCursorPosition(i, width);
+                Console.SetCursorPosition(width, i);
                 Border();
             }
 
             for(int i = 0; i < width; i++)
             {
-                Console.SetCursorPosition(0, i);
+                Console.SetCursorPosition(i, 0);
                 Border();
-                Console.SetCursorPosition(height, i);
+                Console.SetCursorPosition(i, height);
                 Border();
             }
 

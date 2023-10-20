@@ -32,7 +32,7 @@
                 else if (person is Thief)
                 {
                     Thief thief = (Thief)person;
-                    if(thief.Arrested)
+                    if (thief.Arrested)
                     {
                         thiefOutSize--;
                         thiefInJail++;
@@ -42,7 +42,7 @@
                 {
                     policeCount++;
                     Police police = (Police)person;
-                    if(police.Arrest)
+                    if (police.Arrest)
                     {
                         hasArrested++;
                         police.Arrest = false;
@@ -77,6 +77,27 @@
                 "Peter"
             };
             return allNames;
+        }
+        public static int[] GenerateRandomDirection()
+        {
+            int number1, number2;
+
+            do
+            {
+                number1 = Random(-1, 2);
+                number2 = Random(-1, 2);
+            } while (number1 == 0 && number2 == 0);
+
+            return new int[] { number1, number2 };
+        }
+        public static int[] GenerateRandomPlacement(int[,] mapSize)
+        {
+            int number1, number2;
+
+            number1 = Random(0, mapSize.GetLength(0));
+            number2 = Random(0, mapSize.GetLength(1));
+
+            return new int[] { number1, number2 };
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Meeting
     {
-        public static void HandleMeeting(List<Person> persons, int[,] mapSize, List<string> updates)
+        public static void HandleMeeting(List<Person> persons, List<string> updates)
         {
             for (int i = 0; i < persons.Count; i++)
             {

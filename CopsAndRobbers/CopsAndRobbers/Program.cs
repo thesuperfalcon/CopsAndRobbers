@@ -14,9 +14,13 @@
 
             Movement movement = new Movement();
 
+            Helpers helper = new Helpers();
+
             Report report = new Report();
 
             int[,] mapSize = new int[25, 100];
+
+            int[,] prisonSize = new int[10, 10];   
 
             int height = mapSize.GetLength(0);
             int width = mapSize.GetLength(1);
@@ -50,25 +54,7 @@
                 persons.Add(new Police(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), confiscated = Item.EmptyList(), false));
             }
 
-            int citizenCount = 0;
-            int thiefCount = 0;
-            int policeCount = 0;
-
-            foreach (Person person in persons)
-            {
-                if (person is Citizen)
-                {
-                    citizenCount++;
-                }
-                else if (person is Thief)
-                {
-                    thiefCount++;
-                }
-                else if (person is Police)
-                {
-                    policeCount++;
-                }
-            }
+            bool showMap = true;
 
             while (true)
             {
@@ -80,14 +66,43 @@
                     person.Placement = newPlacement;
                 }
 
-                map.DrawMap(mapSize, persons);
-                //report.ReportAndUpdates(person);
-                //Console.WriteLine();
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKeyInfo key = Console.ReadKey();
+
+
+                    switch (key.KeyChar)
+                    {
+                        case 'm':
+                            showMap = true;
+                            continue;
+                        case 'r':
+                            showMap = false;
+                            continue;
+                    }
+                }
+                if(showMap == true)
+                {
+                    map.DrawMap(mapSize, persons);
+                    Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
+                    NewsFeed.WriteNewsFeed(updates);
+                    Meeting.HandleMeeting(persons, updates);
+                }
+                else
+                {
+                    foreach (Person person in persons)
+                    {
+                        report.ReportAndUpdates(person);
+                    }
+                    Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
+                    NewsFeed.WriteNewsFeed(updates);
+                    Meeting.HandleMeeting(persons, updates);
+                }
+
+                //map.DrawMap(mapSize, persons);
                 //Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
                 //NewsFeed.WriteNewsFeed(updates);
-                //Console.WriteLine();
                 //Meeting.HandleMeeting(persons, updates);
-                //Console.ReadKey();
 
                 Thread.Sleep(200);
                 Console.Clear();

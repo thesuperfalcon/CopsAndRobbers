@@ -67,6 +67,7 @@
                     string result = $"Tjuven {thief.Name} tog {stolenItem.Objects} från medborgaren {citizen.Name}.";
                     updates.Add(result);
                     StopTime(2000);
+                    int x = 0;
                 }
             }
         }

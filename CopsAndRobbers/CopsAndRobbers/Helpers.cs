@@ -49,6 +49,7 @@
                     }
                 }
             }
+            Console.WriteLine();
             Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
             Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter i finkan.");
             Console.WriteLine($"Polices: {policeAmount}");

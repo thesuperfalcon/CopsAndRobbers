@@ -4,9 +4,9 @@
     {
         static void Main(string[] args)
         {
-            int citizenAmount = 10;
-            int thiefAmount = 5;
-            int policeAmount = 5;
+            int citizenAmount = 20;
+            int thiefAmount = 10;
+            int policeAmount = 10;
 
             List<string> updates = new List<string>();
 
@@ -27,7 +27,11 @@
 
             int[] placement = new int[2];
 
+            Prison prison = new Prison("", new int[] { 0, 0 }, new int[] {0,0}, 0);
+
             Map map = new Map();
+
+            List<Prison> prisoners = new List<Prison>();
 
             List<Person> persons = new List<Person>();
 
@@ -65,6 +69,13 @@
                     int[] newPlacement = Movement.Move(person, mapSize);
                     person.Placement = newPlacement;
                 }
+                foreach(Prison prisoner in prisoners)
+                {
+                    int[] newPlacement = Movement.MoveInPrison(prisoner, prisonSize);
+                    prisoner.PrisonPlacement = newPlacement;
+                }
+
+                //prison.OutOfJail(prisoners, persons, mapSize);
 
                 if (Console.KeyAvailable)
                 {
@@ -83,10 +94,11 @@
                 }
                 if(showMap == true)
                 {
-                    map.DrawMap(mapSize, persons);
-                    Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
+                    map.DrawMap(mapSize, prisonSize, persons, prisoners);
+                    Helpers.CountAllPersons(persons, prisoners, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates);
+                    Meeting.HandleMeeting(persons, updates, prisoners, prisonSize);
+                    prison.OutOfJail(prisoners, persons, mapSize);
                 }
                 else
                 {
@@ -94,17 +106,12 @@
                     {
                         report.ReportAndUpdates(person);
                     }
-                    Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
+                    Helpers.CountAllPersons(persons, prisoners, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates);
+                    Meeting.HandleMeeting(persons, updates, prisoners, prisonSize);
+                    prison.OutOfJail(prisoners, persons, mapSize);
                 }
-
-                //map.DrawMap(mapSize, persons);
-                //Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
-                //NewsFeed.WriteNewsFeed(updates);
-                //Meeting.HandleMeeting(persons, updates);
-
-                Thread.Sleep(200);
+                Thread.Sleep(100);
                 Console.Clear();
             }
         }

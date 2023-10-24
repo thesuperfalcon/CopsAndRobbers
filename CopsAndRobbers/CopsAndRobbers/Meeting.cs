@@ -2,7 +2,7 @@
 {
     public class Meeting
     {
-        public static void HandleMeeting(List<Person> persons, List<string> updates)
+        public static void HandleMeeting(List<Person> persons, List<string> updates, List<Prison> prisoners, int[,] prisonSize)
         {
             for (int i = 0; i < persons.Count; i++)
             {
@@ -13,13 +13,13 @@
 
                     if (person1.Placement[0] == person2.Placement[0] && person1.Placement[1] == person2.Placement[1])
                     {
-                        HandleEncounter(person1, person2, persons, updates);
+                        HandleEncounter(person1, person2, persons, updates, prisonSize, prisoners);
                     }
                 }
             }
         }
 
-        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates)
+        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize, List<Prison> prisoners)
         {
             if (person1 is Thief && person2 is Citizen)
             {
@@ -31,11 +31,11 @@
             }
             else if (person1 is Police && person2 is Thief)
             {
-                HandleThiefPoliceEncounter((Thief)person2, (Police)person2, persons, updates);
+                HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, updates, prisonSize, prisoners);
             }
             else if (person1 is Thief && person2 is Police)
             {
-                HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, updates);
+                HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, updates, prisonSize, prisoners);
             }
             else if (person1 is Citizen && person2 is Police)
             {
@@ -49,42 +49,39 @@
         }
         public static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates)
         {
-            if (!thief.Arrested)
+            if (!citizen.HasBeenRobbed)
             {
+                citizen.HasBeenRobbed = true;
+            }
+            if (citizen.Belongings.Count > 0)
+            {
+                int randomIndex = Helpers.Random(0, citizen.Belongings.Count);
+                Item stolenItem = citizen.Belongings[randomIndex];
 
-                if (!citizen.HasBeenRobbed)
-                {
-                    citizen.HasBeenRobbed = true;
-                }
-                if (citizen.Belongings.Count > 0)
-                {
-                    int randomIndex = Helpers.Random(0, citizen.Belongings.Count);
-                    Item stolenItem = citizen.Belongings[randomIndex];
+                thief.Loot.Add(stolenItem);
+                citizen.Belongings.RemoveAt(randomIndex);
 
-                    thief.Loot.Add(stolenItem);
-                    citizen.Belongings.RemoveAt(randomIndex);
-
-                    string result = $"Tjuven {thief.Name} tog {stolenItem.Objects} från medborgaren {citizen.Name}.";
-                    updates.Add(result);
-                    StopTime(2000);
-                    int x = 0;
-                }
+                string result = $"Tjuven {thief.Name} tog {stolenItem.Objects} från medborgaren {citizen.Name}.";
+                updates.Add(result);
+                StopTime(2000);
+                int x = 0;
             }
         }
-        public static void HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<string> updates)
+        public static void HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<string> updates, int[,] prisonSize, List<Prison> prisoners)
         {
-
             if (thief.Loot.Count > 0)
             {
                 if (!thief.Arrested)
                 {
                     thief.Arrested = true;
                 }
+                int time = 0;
                 for (int x = 0; x < thief.Loot.Count; x++)
                 {
                     Item pickItem = thief.Loot[x];
                     police.Confiscated.Add(pickItem);
                     thief.Loot.RemoveAt(x);
+                    time += 20;
                 }
                 string result = $"Polisen {police.Name} tog ";
                 foreach (Item item in police.Confiscated)
@@ -92,9 +89,14 @@
                     result += item.Objects + ", ";
                 }
                 result += $"från tjuven {thief.Name}.";
+                prisoners.Add(new Prison(thief.Name, Helpers.GenerateRandomPlacement(prisonSize), thief.Direction, time));
+                persons.Remove(thief);
                 updates.Add(result);
                 StopTime(2000);
-                //persons.Remove(thief);
+            }
+            else
+            {
+                string result = $"Polisen {police.Name} möter tjuven {thief.Name} men inget händer då tjuven inte har begått något brott ännu.";
             }
         }
         public static void HandleCitizenPolice(Police police, Citizen citizen, List<string> updates)

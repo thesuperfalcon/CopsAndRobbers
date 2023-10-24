@@ -8,7 +8,7 @@
             int x = rnd.Next(i, j);
             return x;
         }
-        public static void CountAllPersons(List<Person> persons, int citizenAmount, int thiefAmount, int policeAmount)
+        public static void CountAllPersons(List<Person> persons,List<Prison> prisoners, int citizenAmount, int thiefAmount, int policeAmount)
         {
 
             int hasBeenRobbed = 0;
@@ -18,6 +18,16 @@
 
             int policeCount = 0;
             int hasArrested = 0;
+
+            int prisonersInJail = 0;
+
+            foreach(Prison prisoner in prisoners)
+            {
+                prisonersInJail++;
+                thiefOutSize-=prisonersInJail;
+                thiefInJail += prisonersInJail;
+                int x = 0;
+            }
 
             foreach (Person person in persons)
             {
@@ -29,15 +39,7 @@
                         hasBeenRobbed++;
                     }
                 }
-                else if (person is Thief)
-                {
-                    Thief thief = (Thief)person;
-                    if (thief.Arrested)
-                    {
-                        thiefOutSize--;
-                        thiefInJail++;
-                    }
-                }
+                
                 else if (person is Police)
                 {
                     policeCount++;

@@ -33,10 +33,12 @@ namespace CopsAndRobbers
     {
         public bool Arrested { get; set; }
         public List<Item> Loot { get; set; }
-        public Thief(string name, int[] placement, int[] direction, List<Item>loot, bool arrested) : base(name, placement, direction)
+        public int TimeInJail { get; set; }
+        public Thief(string name, int[] placement, int[] direction, List<Item>loot, bool arrested, int timeInJail) : base(name, placement, direction)
         {
             Loot = loot;
             Arrested = arrested;
+            TimeInJail = timeInJail;
         }
     }
     public class Police : Person

@@ -49,4 +49,13 @@ namespace CopsAndRobbers
             Arrest = arrest;
         }
     }
+    public class Prisoner : Person
+    {
+        public int TimeInJail { get; set; }
+
+        public Prisoner(string name, int[] placement, int[] direction, int timeInJail) : base(name, placement, direction) 
+        {
+            TimeInJail = timeInJail;
+        }
+    }
 }

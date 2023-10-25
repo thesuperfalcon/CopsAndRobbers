@@ -46,6 +46,24 @@ namespace CopsAndRobbers
                     result += item.Objects + ", ";
                 }
             }
+            if(person is Prisoner)
+            {
+                Prisoner prisoner = (Prisoner)person;
+
+                result += " Sitting in jail ";
+
+                result += prisoner.TimeInJail;
+            }
+            Console.WriteLine(result);
+        }
+        public void ReportAndUpdatesPrisoner(Person prisoner)
+        {
+            Console.WriteLine();
+            Prisoner prisonerX = (Prisoner)prisoner;
+            string result = "T";
+            result += $" {prisoner.Placement[0]} {prisoner.Placement[1]} ";
+            result += "Arrested ";
+            result += prisonerX.TimeInJail;
             Console.WriteLine(result);
         }
     }

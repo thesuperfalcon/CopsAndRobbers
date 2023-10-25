@@ -27,11 +27,11 @@
 
             int[] placement = new int[2];
 
-            Prison prison = new Prison("", new int[] { 0, 0 }, new int[] {0,0}, 0);
+            Prison prison = new Prison();
 
             Map map = new Map();
 
-            List<Prison> prisoners = new List<Prison>();
+            List<Person> prisoners = new List<Person>();
 
             List<Person> persons = new List<Person>();
 
@@ -66,21 +66,21 @@
 
                 foreach (Person person in persons)
                 {
-                    int[] newPlacement = Movement.Move(person, mapSize);
-                    person.Placement = newPlacement;
+                    if (person is Citizen || person is Thief || person is Police)
+                    {
+                        int[] newPlacement = Movement.Move(person, mapSize);
+                        person.Placement = newPlacement;
+                    }
                 }
-                foreach(Prison prisoner in prisoners)
+                foreach (Person prisoner in prisoners)
                 {
-                    int[] newPlacement = Movement.MoveInPrison(prisoner, prisonSize);
-                    prisoner.PrisonPlacement = newPlacement;
+                    int[] newPlacement = Movement.Move(prisoner, prisonSize);
+                    prisoner.Placement = newPlacement;
                 }
-
-                //prison.OutOfJail(prisoners, persons, mapSize);
 
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo key = Console.ReadKey();
-
 
                     switch (key.KeyChar)
                     {
@@ -97,7 +97,7 @@
                     map.DrawMap(mapSize, prisonSize, persons, prisoners);
                     Helpers.CountAllPersons(persons, prisoners, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates, prisoners, prisonSize);
+                    Meeting.HandleMeeting(persons, updates, prisonSize, prisoners);
                     prison.OutOfJail(prisoners, persons, mapSize);
                 }
                 else
@@ -106,11 +106,16 @@
                     {
                         report.ReportAndUpdates(person);
                     }
+                    foreach(Person prisoner in prisoners)
+                    {
+                        report.ReportAndUpdatesPrisoner(prisoner);
+                    }
                     Helpers.CountAllPersons(persons, prisoners, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates, prisoners, prisonSize);
+                    Meeting.HandleMeeting(persons, updates, prisonSize, prisoners);
                     prison.OutOfJail(prisoners, persons, mapSize);
                 }
+                //Console.ReadKey();
                 Thread.Sleep(100);
                 Console.Clear();
             }

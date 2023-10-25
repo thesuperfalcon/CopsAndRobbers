@@ -2,7 +2,7 @@
 {
     public class Meeting
     {
-        public static void HandleMeeting(List<Person> persons, List<string> updates, List<Prison> prisoners, int[,] prisonSize)
+        public static void HandleMeeting(List<Person> persons, List<string> updates, int[,] prisonSize, List<Person> prisoners)
         {
             for (int i = 0; i < persons.Count; i++)
             {
@@ -19,7 +19,7 @@
             }
         }
 
-        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize, List<Prison> prisoners)
+        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize, List<Person> prisoners)
         {
             if (person1 is Thief && person2 is Citizen)
             {
@@ -67,7 +67,7 @@
                 int x = 0;
             }
         }
-        public static void HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<string> updates, int[,] prisonSize, List<Prison> prisoners)
+        public static void HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<string> updates, int[,] prisonSize, List<Person> prisoners)
         {
             if (thief.Loot.Count > 0)
             {
@@ -89,10 +89,11 @@
                     result += item.Objects + ", ";
                 }
                 result += $"från tjuven {thief.Name}.";
-                prisoners.Add(new Prison(thief.Name, Helpers.GenerateRandomPlacement(prisonSize), thief.Direction, time));
+                prisoners.Add(new Prisoner(thief.Name, Helpers.GenerateRandomPlacement(prisonSize), thief.Direction, time));
                 persons.Remove(thief);
                 updates.Add(result);
                 StopTime(2000);
+                int y = 0;
             }
             else
             {

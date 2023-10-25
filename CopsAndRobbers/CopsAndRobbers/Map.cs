@@ -2,7 +2,7 @@
 {
     internal class Map
     {
-        public void DrawMap(int[,] map, int[,] prisonSize, List<Person> persons, List<Prison> prisoners)
+        public void DrawMap(int[,] map, int[,] prisonSize, List<Person> persons, List<Person> prisoners)
         {
             Console.Clear();
 
@@ -47,12 +47,16 @@
                 for (int col = 0; col <= prisonWidth; col++)
                 {
                     bool isPersonInPrison = false;
-                    foreach(Prison prisoner in prisoners)
+                    foreach (Person prisoner in prisoners)
                     {
-                        if(row == prisoner.PrisonPlacement[0] && col == prisoner.PrisonPlacement[1])
+                        if (prisoner is Prisoner)
                         {
-                            Console.Write("T");
-                            isPersonInPrison = true;
+                            Prisoner prisoner1 = (Prisoner)prisoner;
+                            if (row == prisoner.Placement[0] && col == prisoner.Placement[1])
+                            {
+                                Console.Write("T");
+                                isPersonInPrison = true;
+                            }
                         }
                     }
                     if (!isPersonInPrison)

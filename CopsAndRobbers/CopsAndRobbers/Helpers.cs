@@ -8,26 +8,18 @@
             int x = rnd.Next(i, j);
             return x;
         }
-        public static void CountAllPersons(List<Person> persons,List<Prison> prisoners, int citizenAmount, int thiefAmount, int policeAmount)
+        public static void CountAllPersons(List<Person> persons, List<Person> prisoners, int citizenAmount, int thiefAmount, int policeAmount)
         {
 
             int hasBeenRobbed = 0;
 
             int thiefOutSize = thiefAmount;
-            int thiefInJail = 0;
 
             int policeCount = 0;
             int hasArrested = 0;
 
             int prisonersInJail = 0;
 
-            foreach(Prison prisoner in prisoners)
-            {
-                prisonersInJail++;
-                thiefOutSize-=prisonersInJail;
-                thiefInJail += prisonersInJail;
-                int x = 0;
-            }
 
             foreach (Person person in persons)
             {
@@ -50,10 +42,18 @@
                         police.Arrest = false;
                     }
                 }
+                else if (person is Thief)
+                {
+                    thiefOutSize++;
+                }
+            }
+            foreach(Person prisoner in prisoners)
+            {
+                prisonersInJail++;
             }
             Console.WriteLine();
             Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
-            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter i finkan.");
+            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {prisonersInJail} sitter i finkan.");
             Console.WriteLine($"Polices: {policeAmount}");
         }
         public static string[] NameGenerator()

@@ -27,7 +27,7 @@ namespace CopsAndRobbers
             {
                 Thief thief = (Thief)person;
 
-                result += " Stealed Goods: ";
+                result += " Stolen Goods: ";
 
                 foreach(Item item in thief.Loot)
                 {

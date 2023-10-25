@@ -53,31 +53,31 @@
             }
             Console.WriteLine();
             Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
-            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {prisonersInJail} sitter i finkan.");
+            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {prisonersInJail} sitter fängslade i Alcatraz.");
             Console.WriteLine($"Polices: {policeAmount}");
         }
         public static string[] NameGenerator()
         {
             string[] allNames =
             {
-                "Karin",
-                "Anders",
-                "Johan",
-                "Eva",
-                "Maria",
-                "Mikael",
-                "Anna",
-                "Sara",
-                "Erik",
-                "Per",
-                "Christina",
+                "John Cena",
+                "Anders Bagge",
+                "Mikael Engström",
+                "The Rock",
+                "Snoop Dogg",
+                "Zlatan",
+                "Greta Thunberg",
+                "Mr Bean",
+                "Billy Öhman",
+                "Akon",
+                /*"Christina",
                 "Lena",
                 "Lars",
                 "Emma",
                 "Kerstin",
                 "Karl",
                 "Marie",
-                "Peter"
+                "Peter" */
             };
             return allNames;
         }

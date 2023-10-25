@@ -18,11 +18,11 @@ namespace CopsAndRobbers
         {
             List<Item> items = new List<Item>();
 
-            Item item1 = new Item("Apple-Watch");
-            Item item2 = new Item("Keys");
+            Item item1 = new Item("Rolex Daytona");
+            Item item2 = new Item("Tesla Keys");
             Item item3 = new Item("Iphone 15");
-            Item item4 = new Item("Cash");
-            Item item5 = new Item("Snus");
+            Item item4 = new Item("Amex Card");
+            Item item5 = new Item("General Snus");
 
             items.Add(item1);
             items.Add(item2);

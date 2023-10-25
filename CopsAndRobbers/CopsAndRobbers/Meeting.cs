@@ -102,7 +102,7 @@
         }
         public static void HandleCitizenPolice(Police police, Citizen citizen, List<string> updates)
         {
-            string result = $"Polisen {police.Name} möter medborgare {citizen.Name} då dem hälsar på varandra";
+            string result = $"Polisen {police.Name} möter medborgare {citizen.Name} och dem hälsar glatt på varandra";
             updates.Add(result);
             StopTime(2000);
 

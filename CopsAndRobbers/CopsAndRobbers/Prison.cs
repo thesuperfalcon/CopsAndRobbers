@@ -8,7 +8,6 @@
             {
                 if (person is Thief)
                 {
-
                     Thief thief = (Thief)person;
                     if (thief.TimeInJail <= 0)
                     {

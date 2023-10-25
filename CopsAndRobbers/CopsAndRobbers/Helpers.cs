@@ -39,7 +39,6 @@
                     if (police.Arrest)
                     {
                         hasArrested++;
-                        police.Arrest = false;
                     }
                 }
                 else if (person is Thief)
@@ -58,13 +57,8 @@
             
             Console.WriteLine();
             Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
-
-            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {prisonersInJail} sitter fängslade i Alcatraz.");
-
-            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter i finkan.");
-            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {prisonersInJail} sitter fängslade i Alcatraz.");
-
-            Console.WriteLine($"Polices: {policeAmount}");
+            Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter fängslade i Alcatraz.");
+            Console.WriteLine($"Polices: {policeAmount} varav {hasArrested} har skickat in tjuvar till Alcatraz.");
         }
         public static string[] NameGenerator()
         {

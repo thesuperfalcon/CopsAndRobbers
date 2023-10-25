@@ -71,6 +71,7 @@
                 if (!thief.Arrested)
                 {
                     thief.Arrested = true;
+                    police.Arrest = true;
                 }
                 int time = 0;
                 for (int x = 0; x < thief.Loot.Count; x++)

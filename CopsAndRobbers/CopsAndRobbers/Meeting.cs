@@ -2,7 +2,7 @@
 {
     public class Meeting
     {
-        public static void HandleMeeting(List<Person> persons, List<string> updates, int[,] prisonSize)
+        public static void HandleMeeting(List<Person> persons, List<string> updates, int[,] prisonSize, int[,]poorHouseSize)
         {
             for (int i = 0; i < persons.Count; i++)
             {
@@ -13,12 +13,12 @@
 
                     if (person1.Placement[0] == person2.Placement[0] && person1.Placement[1] == person2.Placement[1])
                     {
-                        HandleEncounter(person1, person2, persons, updates, prisonSize);
+                        HandleEncounter(person1, person2, persons, updates, prisonSize, poorHouseSize);
                     }
                 }
             }
         }
-        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize)
+        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize, int[,]poorHouseSize)
         {
             if (person1 is Thief && person2 is Citizen)
             {
@@ -38,11 +38,11 @@
             }
             else if (person1 is Citizen && person2 is Police)
             {
-                HandleCitizenPolice((Police)person2, (Citizen)person1, updates);
+                HandleCitizenPolice((Police)person2, (Citizen)person1, updates, poorHouseSize);
             }
             else if (person1 is Police && person2 is Citizen)
             {
-                HandleCitizenPolice((Police)person1, (Citizen)person2, updates);
+                HandleCitizenPolice((Police)person1, (Citizen)person2, updates, poorHouseSize);
             }
         }
         public static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates)
@@ -97,9 +97,20 @@
                 string result = $"Polisen {police.Name} möter tjuven {thief.Name} men inget händer då tjuven inte har begått något brott ännu.";
             }
         }
-        public static void HandleCitizenPolice(Police police, Citizen citizen, List<string> updates)
+        public static void HandleCitizenPolice(Police police, Citizen citizen, List<string> updates, int[,] poorHouseSize)
         {
-            string result = $"Polisen {police.Name} möter medborgare {citizen.Name} och dem hälsar glatt på varandra";
+            string result = string.Empty;
+            if (citizen.Belongings.Count == 0)
+            {
+                citizen.IsPoor = true;
+                result = $"Polisen {police.Name} arresterar medborgaren {citizen.Name} då den är fattig";
+                citizen.Placement = Helpers.GenerateRandomPlacement(poorHouseSize);
+            }
+            else
+            {
+
+                result = $"Polisen {police.Name} möter medborgare {citizen.Name} och dem hälsar glatt på varandra";
+            }
             updates.Add(result);
             StopTime(2000);
 

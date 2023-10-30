@@ -47,10 +47,7 @@
                     if (thief.Arrested)
                     {
                         thiefInJail++;
-                    }
-                    else
-                    {
-                        thiefOutSize++;
+                        thiefOutSize--;
                     }
                 }
             }

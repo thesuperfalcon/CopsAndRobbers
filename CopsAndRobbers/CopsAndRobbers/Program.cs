@@ -22,6 +22,8 @@
 
             int[,] prisonSize = new int[10, 10];
 
+            int[,] poorHouseSize = new int[10, 10];
+
             int height = mapSize.GetLength(0);
             int width = mapSize.GetLength(1);
 
@@ -43,7 +45,7 @@
 
             for (int i = 1; i <= citizenAmount; i++)
             {
-                persons.Add(new Citizen(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), belongings = Item.AllTypesOfObjects(), false));
+                persons.Add(new Citizen(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), belongings = Item.AllTypesOfObjects(), false, false));
             }
 
             for (int i = 1; i <= thiefAmount; i++)
@@ -65,7 +67,7 @@
                 foreach (Person person in persons)
                 {
 
-                    int[] newPlacement = Movement.Move(person, mapSize, prisonSize);
+                    int[] newPlacement = Movement.Move(person, mapSize, prisonSize, poorHouseSize);
                     person.Placement = newPlacement;
                 }
 
@@ -81,14 +83,27 @@
                         case 'r':
                             showMap = false;
                             continue;
+                        case 'c':
+                            persons.Add(new Citizen(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), belongings = Item.AllTypesOfObjects(), false, false));
+                            citizenAmount++;
+                            break;
+                        case 't':
+                            persons.Add(new Thief(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), loot = Item.EmptyList(), false, 0));
+                            thiefAmount++;
+                            break;
+                        case 'p':
+                            persons.Add(new Police(names[Helpers.Random(0, names.Length)], Helpers.GenerateRandomPlacement(mapSize), Helpers.GenerateRandomDirection(), confiscated = Item.EmptyList(), false));
+                            policeAmount++;
+                            break;
+
                     }
                 }
                 if (showMap == true)
                 {
-                    map.DrawMap(mapSize, prisonSize, persons);
+                    map.DrawMap(mapSize, prisonSize, poorHouseSize, persons);
                     Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates, prisonSize);
+                    Meeting.HandleMeeting(persons, updates, prisonSize, poorHouseSize);
                     prison.OutOfJail(persons, mapSize);
                     int x = 0;
                 }
@@ -101,7 +116,7 @@
                     
                     Helpers.CountAllPersons(persons, citizenAmount, thiefAmount, policeAmount);
                     NewsFeed.WriteNewsFeed(updates);
-                    Meeting.HandleMeeting(persons, updates, prisonSize);
+                    Meeting.HandleMeeting(persons, updates, prisonSize, poorHouseSize);
                     prison.OutOfJail(persons, mapSize);
                 }
                 //Console.ReadKey();

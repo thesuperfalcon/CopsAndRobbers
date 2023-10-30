@@ -22,11 +22,13 @@ namespace CopsAndRobbers
     public class Citizen : Person 
     {
         public bool HasBeenRobbed { get; set; }
+        public bool IsPoor { get; set; }
         public List<Item> Belongings { get; set; }
-        public Citizen(string name, int[]placement, int[] direction, List<Item> belongings, bool hasBeenRobbed) : base(name, placement, direction)
+        public Citizen(string name, int[]placement, int[] direction, List<Item> belongings, bool hasBeenRobbed, bool isPoor) : base(name, placement, direction)
         {
             Belongings = belongings;
             HasBeenRobbed = hasBeenRobbed;
+            IsPoor = isPoor;
         }
     }
     public class Thief : Person

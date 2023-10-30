@@ -2,7 +2,7 @@
 {
     internal class Map
     {
-        public void DrawMap(int[,] map, int[,] prisonSize, List<Person> persons)
+        public void DrawMap(int[,] map, int[,] prisonSize, int[,] poorHouseSize, List<Person> persons)
         {
             Console.Clear();
 
@@ -66,6 +66,44 @@
                     if (!isPersonInPrison)
                     {
                         if (row == 0 || col == 0 || row == prisonHeight || col == prisonWidth)
+                        {
+                            Console.Write("X");
+                        }
+                        else
+                        {
+                            Console.Write(" ");
+                        }
+                    }
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+            int poorHouseHeight = poorHouseSize.GetLength(0);
+            int poorHouseWidth = poorHouseSize.GetLength(1);
+
+            for(int row = 0; row <= prisonHeight; row++)
+            {
+                for(int col = 0; col <= prisonWidth; col++)
+                {
+                    bool isPersonInPoorHouse = false;
+                    foreach(Person person in persons)
+                    {
+                        if(person is Citizen)
+                        {
+                            Citizen citizen = (Citizen)person;
+                            if(citizen.IsPoor)
+                            {
+                                if(row == citizen.Placement[0] && col == citizen.Placement[1])
+                                {
+                                    Console.Write("C");
+                                    isPersonInPoorHouse = true;
+                                }
+                            }
+                        }
+                    }
+                    if(!isPersonInPoorHouse)
+                    {
+                        if (row == 0 || col == 0 || row == poorHouseHeight || col == poorHouseWidth)
                         {
                             Console.Write("X");
                         }

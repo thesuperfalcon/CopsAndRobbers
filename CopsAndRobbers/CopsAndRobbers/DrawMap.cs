@@ -25,18 +25,21 @@ namespace CopsAndRobbers
                             if(person is Citizen)
                             {
                                 Console.Write("C");
+                                // console.foregroundcolor = consolecolor.green
                                 isPersonHere = true;
                                 break;
                             }
                             else if (person is Police)
                             {
                                 Console.Write("P");
+                                // console.foregroundcolor = consolecolor.blue
                                 isPersonHere = true;
                                 break;
                             }
                             else if (person is Thief)
                             {
                                 Console.Write("T");
+                                // console.foregroundcolor = consolecolor.red
                                 isPersonHere = true;
                                 break;
                             }

@@ -2,25 +2,25 @@
 {
     public class Prison
     {
-        public List<Person> OutOfJail(List<Person> persons, int[,] mapSize)
+        public (List<Person>, List<Person>) OutOfJail(List<Person> prisoners, List<Person> persons, Person prisoner, int[,] mapSize)
         {
-            foreach (Person person in persons) 
+            if (prisoner is Thief)
             {
-                if (person is Thief)
+                Thief thief = (Thief)prisoner;
+                if (thief.TimeInJail <= 0)
                 {
-                    Thief thief = (Thief)person;
-                    if (thief.TimeInJail <= 0)
-                    {
-                        thief.Placement = Helpers.GenerateRandomPlacement(mapSize);
-                        thief.Arrested = false;
-                    }
-                    else
-                    {
-                        thief.TimeInJail--;
-                    }
+                    thief.Placement = Helpers.GenerateRandomPlacement(mapSize);
+                    thief.Arrested = false;
+                    thief.Loot = Item.EmptyList();
+                    persons.Add(thief);
+                    prisoners.Remove(thief);
+                }
+                else
+                {
+                    thief.TimeInJail--;
                 }
             }
-            return persons;
+            return (prisoners, persons);
         }
     }
 }

@@ -8,18 +8,15 @@
             int x = rnd.Next(i, j);
             return x;
         }
-        public static void CountAllPersons(List<Person> persons, int citizenAmount, int thiefAmount, int policeAmount)
+        public static void CountAllPersons(List<Person> persons, List<Person> prisoners, List<Person> poorGuys, int citizenAmount, int thiefAmount, int policeAmount)
         {
 
             int hasBeenRobbed = 0;
-
-            int thiefOutSize = thiefAmount;
-
+            int amountOfPoorGuys = poorGuys.Count;
             int policeCount = 0;
             int hasArrested = 0;
-
-            int thiefInJail = 0;
-
+            int thiefInJail = prisoners.Count;
+            int thiefOutSize = thiefAmount;
 
             foreach (Person person in persons)
             {
@@ -41,19 +38,9 @@
                         hasArrested++;
                     }
                 }
-                else if (person is Thief)
-                {
-                    Thief thief = (Thief)person;
-                    if (thief.Arrested)
-                    {
-                        thiefInJail++;
-                        thiefOutSize--;
-                    }
-                }
             }
-            
             Console.WriteLine();
-            Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade.");
+            Console.WriteLine($"Citizens: {citizenAmount} varav {hasBeenRobbed} har blivit rånade och {amountOfPoorGuys} är i fattighuset.");
             Console.WriteLine($"Thieves: {thiefOutSize} är ute och {thiefInJail} sitter fängslade i Alcatraz.");
             Console.WriteLine($"Polices: {policeAmount} varav {hasArrested} har skickat in tjuvar till Alcatraz.");
         }
@@ -71,14 +58,14 @@
                 "Mr Bean",
                 "Billy Öhman",
                 "Akon",
-                /*"Christina",
+                "Christina",
                 "Lena",
                 "Lars",
                 "Emma",
                 "Kerstin",
                 "Karl",
                 "Marie",
-                "Peter" */
+                "Peter" 
             };
             return allNames;
         }

@@ -37,6 +37,7 @@ namespace CopsAndRobbers
             List<Item> items = new List<Item> ();
 
             return items;
+            int x = 0;
         }
     }
 }

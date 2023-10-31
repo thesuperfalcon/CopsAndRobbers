@@ -8,17 +8,15 @@ namespace CopsAndRobbers
 {
     public class NewsFeed
     {
-       public static void WriteNewsFeed(List<string> updates)
+        public void WriteNewsFeed(List<string> updates)
         {
             Console.WriteLine();
             Console.WriteLine("Newsfeed: ");
             if (updates.Count >= 6)
             {
-                updates.RemoveAt(0);
+                updates.RemoveAt(6);
             }
-
             int number = 1;
-           
             foreach (string update in updates)
             {
                 Console.WriteLine(number + ": " + update);

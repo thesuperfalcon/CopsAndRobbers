@@ -2,7 +2,7 @@
 {
     public class Meeting
     {
-        public static void HandleMeeting(List<Person> persons, List<string> updates, int[,] prisonSize, int[,]poorHouseSize)
+        public static (List<Person>,List<Person>,List<Person>) HandleMeeting(List<Person> persons, List<Person> prisoners, List<Person> poorGuys,List<string> updates, int[,] prisonSize, int[,]poorHouseSize, int[,]mapSize)
         {
             for (int i = 0; i < persons.Count; i++)
             {
@@ -13,39 +13,48 @@
 
                     if (person1.Placement[0] == person2.Placement[0] && person1.Placement[1] == person2.Placement[1])
                     {
-                        HandleEncounter(person1, person2, persons, updates, prisonSize, poorHouseSize);
+                        prisoners = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item1;
+                        poorGuys = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item2;
+                        persons = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item3;
                     }
                 }
             }
+            StopTime();
+            return (prisoners, poorGuys, persons);
         }
-        public static void HandleEncounter(Person person1, Person person2, List<Person> persons, List<string> updates, int[,] prisonSize, int[,]poorHouseSize)
+        public static (List<Person>,List<Person>,List<Person>) HandleEncounter(Person person1, Person person2, List<Person> persons, List<Person> prisoners, List<Person> poorGuys, List<string> updates, int[,] prisonSize, int[,]poorHouseSize, int[,]mapSize)
         {
             if (person1 is Thief && person2 is Citizen)
             {
-                HandleThiefCitizenEncounter((Thief)person1, (Citizen)person2, updates);
+                HandleThiefCitizenEncounter((Thief)person1, (Citizen)person2, updates, mapSize);
             }
             else if (person1 is Citizen && person2 is Thief)
             {
-                HandleThiefCitizenEncounter((Thief)person2, (Citizen)person1, updates);
+                HandleThiefCitizenEncounter((Thief)person2, (Citizen)person1, updates, mapSize);
             }
             else if (person1 is Police && person2 is Thief)
             {
-                HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, updates, prisonSize);
+                prisoners = HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, prisoners, updates, prisonSize, mapSize).Item1;
+                persons = HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, prisoners, updates, prisonSize, mapSize).Item2;
             }
             else if (person1 is Thief && person2 is Police)
             {
-                HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, updates, prisonSize);
+                prisoners = HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, prisoners, updates, prisonSize, mapSize).Item1;
+                persons = HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, prisoners, updates, prisonSize, mapSize).Item2;
             }
             else if (person1 is Citizen && person2 is Police)
             {
-                HandleCitizenPolice((Police)person2, (Citizen)person1, updates, poorHouseSize);
+                poorGuys = HandleCitizenPolice((Police)person2, (Citizen)person1, persons, poorGuys, updates, poorHouseSize, mapSize).Item1;
+                persons = HandleCitizenPolice((Police)person2, (Citizen)person1, persons, poorGuys, updates, poorHouseSize, mapSize).Item2;
             }
             else if (person1 is Police && person2 is Citizen)
             {
-                HandleCitizenPolice((Police)person1, (Citizen)person2, updates, poorHouseSize);
+                poorGuys = HandleCitizenPolice((Police)person1, (Citizen)person2, persons, poorGuys, updates, poorHouseSize, mapSize).Item1;
+                persons = HandleCitizenPolice((Police)person1, (Citizen)person2, persons, poorGuys, updates, poorHouseSize, mapSize).Item2;
             }
+            return (prisoners, poorGuys, persons);
         }
-        public static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates)
+        public static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates, int[,]mapSize)
         {
             if (!citizen.HasBeenRobbed)
             {
@@ -60,12 +69,14 @@
                 citizen.Belongings.RemoveAt(randomIndex);
 
                 string result = $"Tjuven {thief.Name} tog {stolenItem.Objects} från medborgaren {citizen.Name}.";
+                citizen.Direction = MovementV2.Movement(citizen, mapSize);
+                thief.Direction = MovementV2.Movement(thief, mapSize);
                 updates.Add(result);
-                StopTime(2000);
             }
         }
-        public static void HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<string> updates, int[,] prisonSize)
+        public static (List<Person>,List<Person>) HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<Person> prisoners, List<string> updates, int[,] prisonSize, int[,]mapSize)
         {
+            string result = string.Empty;
             if (thief.Loot.Count > 0)
             {
                 if (!thief.Arrested)
@@ -73,31 +84,34 @@
                     thief.Arrested = true;
                     police.Arrest = true;
                 }
-                int time = 0;
+                thief.TimeInJail += 40;
                 for (int x = 0; x < thief.Loot.Count; x++)
                 {
                     Item pickItem = thief.Loot[x];
                     police.Confiscated.Add(pickItem);
                     thief.Loot.RemoveAt(x);
-                    time += 20;
+                    thief.TimeInJail += 30;
                 }
-                string result = $"Polisen {police.Name} tog ";
+                result = $"Polisen {police.Name} tog ";
                 foreach (Item item in police.Confiscated)
                 {
                     result += item.Objects + ", ";
                 }
                 result += $"från tjuven {thief.Name}.";
                 thief.Placement = Helpers.GenerateRandomPlacement(prisonSize);
-                thief.TimeInJail = time ;
-                updates.Add(result);
-                StopTime(2000);
+                prisoners.Add(thief);
+                persons.Remove(thief);
             }
             else
             {
-                string result = $"Polisen {police.Name} möter tjuven {thief.Name} men inget händer då tjuven inte har begått något brott ännu.";
+                result = $"Polisen {police.Name} möter tjuven {thief.Name} men inget händer då tjuven inte har begått något brott ännu.";
+                thief.Direction = MovementV2.Movement(thief, mapSize);
             }
+            police.Direction = MovementV2.Movement(police, mapSize);
+            updates.Add(result);
+            return (prisoners, persons);
         }
-        public static void HandleCitizenPolice(Police police, Citizen citizen, List<string> updates, int[,] poorHouseSize)
+        public static (List<Person>,List<Person>) HandleCitizenPolice(Police police, Citizen citizen, List<Person> persons, List<Person> poorGuys,List<string> updates, int[,] poorHouseSize, int[,]mapSize)
         {
             string result = string.Empty;
             if (citizen.Belongings.Count == 0)
@@ -105,19 +119,21 @@
                 citizen.IsPoor = true;
                 result = $"Polisen {police.Name} arresterar medborgaren {citizen.Name} då den är fattig";
                 citizen.Placement = Helpers.GenerateRandomPlacement(poorHouseSize);
+                poorGuys.Add(citizen);
+                persons.Remove(citizen);
             }
             else
             {
-
                 result = $"Polisen {police.Name} möter medborgare {citizen.Name} och dem hälsar glatt på varandra";
+                citizen.Direction = MovementV2.Movement(citizen, mapSize);
             }
+            police.Direction = MovementV2.Movement(police, mapSize);
             updates.Add(result);
-            StopTime(2000);
-
+            return (poorGuys, persons);
         }
-        public static void StopTime(int time)
+        public static void StopTime()
         {
-            Thread.Sleep(time);
+            Thread.Sleep(50);
         }
     }
 }

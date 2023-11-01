@@ -50,22 +50,18 @@
             {
                 "John Cena",
                 "Anders Bagge",
-                "Mikael Engström",
+                "Pernilla Wahlgren",
                 "The Rock",
-                "Snoop Dogg",
-                "Zlatan",
+                "Zlatan Ibrahimovic",
                 "Greta Thunberg",
                 "Mr Bean",
                 "Billy Öhman",
-                "Akon",
-                "Christina",
-                "Lena",
-                "Lars",
-                "Emma",
-                "Kerstin",
-                "Karl",
-                "Marie",
-                "Peter" 
+                "Magdalena Andersson",
+                "Glenn Hysén",
+                "Homer Simpson",
+                "Luke Skywalker",
+                "Frodo",
+                "Tony Stark" 
             };
             return allNames;
         }

@@ -8,10 +8,12 @@ namespace CopsAndRobbers
 {
     internal class DrawMap
     {
-        public void DrawMapV2(int[,]size, List<Person> persons)
+        public void DrawMapV2(int[,]size, List<Person> persons, string name)
         {
             int height = size.GetLength(0);
             int width = size.GetLength(1);
+
+            Console.WriteLine(name);
 
             for (int row = 0; row <= height; row++)
             {
@@ -22,21 +24,27 @@ namespace CopsAndRobbers
                     {
                         if (row == person.Placement[0] && col == person.Placement[1])
                         {
-                            if(person is Citizen)
+                            if (person is Citizen)
                             {
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.Write("C");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }
                             else if (person is Police)
                             {
+                                Console.ForegroundColor = ConsoleColor.Blue;
                                 Console.Write("P");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }
                             else if (person is Thief)
                             {
+                                Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write("T");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }

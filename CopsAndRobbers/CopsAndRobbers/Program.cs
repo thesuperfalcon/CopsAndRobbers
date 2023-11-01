@@ -116,11 +116,11 @@ namespace CopsAndRobbers
                 }
                 if (showMap == true)
                 {
-                    drawMap.DrawMapV2(mapSize, persons);
-                    drawMap.DrawMapV2(prisonSize, prisoners);
-                    drawMap.DrawMapV2(poorHouseSize, poorGuys);
+                    drawMap.DrawMapV2(mapSize, persons, "City");
+                    drawMap.DrawMapV2(prisonSize, prisoners, "Jail");
+                    drawMap.DrawMapV2(poorHouseSize, poorGuys, "Poor-house");
                     Helpers.CountAllPersons(persons, prisoners, poorGuys, citizenAmount, thiefAmount, policeAmount);
-                    //NewsFeed.WriteNewsFeed(updates);
+                    NewsFeed.WriteNewsFeed(updates);
                     (prisoners, poorGuys, persons) = Meeting.HandleMeeting(persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize);
                     if (prisoners.Count > 0)
                     {
@@ -134,7 +134,7 @@ namespace CopsAndRobbers
                 {
                     report.ReportAndUpdates(persons, prisoners, poorGuys);
                     Helpers.CountAllPersons(persons, prisoners, poorGuys, citizenAmount, thiefAmount, policeAmount);
-                    //NewsFeed.WriteNewsFeed(updates);
+                    NewsFeed.WriteNewsFeed(updates);
                     (prisoners, poorGuys, persons) = Meeting.HandleMeeting(persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize);
                     if (prisoners.Count > 0)
                     {
@@ -144,7 +144,7 @@ namespace CopsAndRobbers
                         }
                     }
                 }
-                Thread.Sleep(50);
+                Thread.Sleep(100);
                 Console.Clear();
             }
         }

@@ -1,26 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CopsAndRobbers
 {
     public class NewsFeed
     {
-        public void WriteNewsFeed(List<string> updates)
+        public static void WriteNewsFeed(List<string> updates)
         {
             Console.WriteLine();
-            Console.WriteLine("Newsfeed: ");
-            if (updates.Count >= 6)
-            {
-                updates.RemoveAt(6);
-            }
+            Console.WriteLine("News-Feed:");
+
+            Queue <string> newsFeedStack = new Queue<string>();
+
             int number = 1;
-            foreach (string update in updates)
+            foreach(string item in updates)
             {
-                Console.WriteLine(number + ": " + update);
+                newsFeedStack.Enqueue(number + ": " + item);
                 number++;
+            }
+            while(newsFeedStack.Count > 5)
+            {
+                newsFeedStack.Dequeue();
+            }
+            foreach(string item in newsFeedStack.Reverse())
+            {
+                Console.WriteLine(item);
             }
         }
     }

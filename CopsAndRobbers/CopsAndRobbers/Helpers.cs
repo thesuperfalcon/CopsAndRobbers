@@ -16,7 +16,7 @@
             int policeCount = 0;
             int hasArrested = 0;
             int thiefInJail = prisoners.Count;
-            int thiefOutSize = thiefAmount;
+            int thiefOutSize = thiefAmount - thiefInJail;
 
             foreach (Person person in persons)
             {

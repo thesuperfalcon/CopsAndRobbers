@@ -13,16 +13,16 @@
 
                     if (person1.Placement[0] == person2.Placement[0] && person1.Placement[1] == person2.Placement[1])
                     {
-                        prisoners = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item1;
-                        poorGuys = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item2;
-                        persons = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize).Item3;
+                        (prisoners, poorGuys, persons) = HandleEncounter(person1, person2, persons, prisoners, poorGuys, updates, prisonSize, poorHouseSize, mapSize);
+                        person1.Direction = Helpers.GenerateRandomDirection();
+                        person2.Direction = Helpers.GenerateRandomDirection();
                     }
                 }
             }
             StopTime();
             return (prisoners, poorGuys, persons);
         }
-        public static (List<Person>,List<Person>,List<Person>) HandleEncounter(Person person1, Person person2, List<Person> persons, List<Person> prisoners, List<Person> poorGuys, List<string> updates, int[,] prisonSize, int[,]poorHouseSize, int[,]mapSize)
+        private static (List<Person>,List<Person>,List<Person>) HandleEncounter(Person person1, Person person2, List<Person> persons, List<Person> prisoners, List<Person> poorGuys, List<string> updates, int[,] prisonSize, int[,]poorHouseSize, int[,]mapSize)
         {
             if (person1 is Thief && person2 is Citizen)
             {
@@ -34,27 +34,24 @@
             }
             else if (person1 is Police && person2 is Thief)
             {
-                prisoners = HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, prisoners, updates, prisonSize, mapSize).Item1;
-                persons = HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, prisoners, updates, prisonSize, mapSize).Item2;
+                (prisoners, persons) = HandleThiefPoliceEncounter((Thief)person2, (Police)person1, persons, prisoners, updates, prisonSize, mapSize);
             }
             else if (person1 is Thief && person2 is Police)
             {
-                prisoners = HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, prisoners, updates, prisonSize, mapSize).Item1;
-                persons = HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, prisoners, updates, prisonSize, mapSize).Item2;
+                (prisoners, persons) = HandleThiefPoliceEncounter((Thief)person1, (Police)person2, persons, prisoners, updates, prisonSize, mapSize);
             }
             else if (person1 is Citizen && person2 is Police)
             {
-                poorGuys = HandleCitizenPolice((Police)person2, (Citizen)person1, persons, poorGuys, updates, poorHouseSize, mapSize).Item1;
-                persons = HandleCitizenPolice((Police)person2, (Citizen)person1, persons, poorGuys, updates, poorHouseSize, mapSize).Item2;
+                (poorGuys, persons) = HandleCitizenPolice((Police)person2, (Citizen)person1, persons, poorGuys, updates, poorHouseSize, mapSize);
             }
             else if (person1 is Police && person2 is Citizen)
             {
-                poorGuys = HandleCitizenPolice((Police)person1, (Citizen)person2, persons, poorGuys, updates, poorHouseSize, mapSize).Item1;
-                persons = HandleCitizenPolice((Police)person1, (Citizen)person2, persons, poorGuys, updates, poorHouseSize, mapSize).Item2;
+
+                (poorGuys, persons) = HandleCitizenPolice((Police)person1, (Citizen)person2, persons, poorGuys, updates, poorHouseSize, mapSize);
             }
             return (prisoners, poorGuys, persons);
         }
-        public static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates, int[,]mapSize)
+        private static void HandleThiefCitizenEncounter(Thief thief, Citizen citizen, List<string> updates, int[,]mapSize)
         {
             if (!citizen.HasBeenRobbed)
             {
@@ -74,7 +71,7 @@
                 updates.Add(result);
             }
         }
-        public static (List<Person>,List<Person>) HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<Person> prisoners, List<string> updates, int[,] prisonSize, int[,]mapSize)
+        private static (List<Person>,List<Person>) HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<Person> prisoners, List<string> updates, int[,] prisonSize, int[,]mapSize)
         {
             string result = string.Empty;
             if (thief.Loot.Count > 0)
@@ -111,7 +108,7 @@
             updates.Add(result);
             return (prisoners, persons);
         }
-        public static (List<Person>,List<Person>) HandleCitizenPolice(Police police, Citizen citizen, List<Person> persons, List<Person> poorGuys,List<string> updates, int[,] poorHouseSize, int[,]mapSize)
+        private static (List<Person>,List<Person>) HandleCitizenPolice(Police police, Citizen citizen, List<Person> persons, List<Person> poorGuys,List<string> updates, int[,] poorHouseSize, int[,]mapSize)
         {
             string result = string.Empty;
             if (citizen.Belongings.Count == 0)
@@ -131,7 +128,7 @@
             updates.Add(result);
             return (poorGuys, persons);
         }
-        public static void StopTime()
+        private static void StopTime()
         {
             Thread.Sleep(50);
         }

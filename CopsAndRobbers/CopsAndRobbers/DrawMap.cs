@@ -28,6 +28,7 @@ namespace CopsAndRobbers
                             {
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.Write("C");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }
@@ -35,6 +36,7 @@ namespace CopsAndRobbers
                             {
                                 Console.ForegroundColor = ConsoleColor.Blue;
                                 Console.Write("P");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }
@@ -42,6 +44,7 @@ namespace CopsAndRobbers
                             {
                                 Console.ForegroundColor = ConsoleColor.Red;
                                 Console.Write("T");
+                                Console.ResetColor();
                                 isPersonHere = true;
                                 break;
                             }

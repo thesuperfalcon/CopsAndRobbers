@@ -60,7 +60,7 @@
                 "Glenn Hysén",
                 "Homer Simpson",
                 "Luke Skywalker",
-                "Frodo",
+                "Frodo Baggins",
                 "Tony Stark" 
             };
             return allNames;

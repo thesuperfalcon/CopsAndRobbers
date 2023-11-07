@@ -70,6 +70,7 @@
                 thief.Direction = MovementV2.Movement(thief, mapSize);
                 updates.Add(result);
             }
+            StopTime();
         }
         private static (List<Person>,List<Person>) HandleThiefPoliceEncounter(Thief thief, Police police, List<Person> persons, List<Person> prisoners, List<string> updates, int[,] prisonSize, int[,]mapSize)
         {
@@ -107,6 +108,7 @@
             police.Direction = MovementV2.Movement(police, mapSize);
             updates.Add(result);
             return (prisoners, persons);
+            StopTime();
         }
         private static (List<Person>,List<Person>) HandleCitizenPolice(Police police, Citizen citizen, List<Person> persons, List<Person> poorGuys,List<string> updates, int[,] poorHouseSize, int[,]mapSize)
         {
@@ -127,10 +129,11 @@
             police.Direction = MovementV2.Movement(police, mapSize);
             updates.Add(result);
             return (poorGuys, persons);
+            StopTime();
         }
         private static void StopTime()
         {
-            Thread.Sleep(50);
+            Thread.Sleep(2000);
         }
     }
 }

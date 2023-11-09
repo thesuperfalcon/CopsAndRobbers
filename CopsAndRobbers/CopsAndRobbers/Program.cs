@@ -6,9 +6,9 @@ namespace CopsAndRobbers
     {
         static void Main(string[] args)
         {
-            int citizenAmount = 10;
-            int thiefAmount = 7;
-            int policeAmount = 5;
+            int citizenAmount = 12;
+            int thiefAmount = 10;
+            int policeAmount = 7;
 
             List<string> updates = new List<string>();
 
@@ -144,7 +144,7 @@ namespace CopsAndRobbers
                         }
                     }
                 }
-                Thread.Sleep(100);
+                Thread.Sleep(50);
                 Console.Clear();
             }
         }
